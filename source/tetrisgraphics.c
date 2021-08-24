@@ -68,6 +68,13 @@ void initGameGfx(tetrisGfxState *gfxState) {
  */
 void drawGame(tetrisGfxState *gfxState) {
     swiWaitForVBlank();
+    // draw player piece
+    for(int i = 0; i < PIECE_BLOCKS; i++) {
+        tetrisBlock block = gfxState->gameState->playerPiece.blocks[i];
+        int transformedBlockX = BOARD_ORIGIN_X + blockToScreen(block.x);
+        int transformedBlockY = BOARD_ORIGIN_Y + blockToScreen(block.y);
+        oamSetXY(&oamMain, i, transformedBlockX, transformedBlockY);
+    }
     oamUpdate(&oamMain);
     bgUpdate();
     //printf("Drawing game\n");

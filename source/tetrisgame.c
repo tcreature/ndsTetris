@@ -44,5 +44,13 @@ void initGame(tetrisGameState *state) {
 
 STATE_TYPE updateGame(tetrisGameState *state) {
     state->frame++;
+
+    scanKeys();
+    int keys = keysDown();
+    if(keys & KEY_A)
+        rotatePiece(&state->playerPiece, false);
+    if(keys & KEY_B)
+        rotatePiece(&state->playerPiece, true);
+
     return state->stateType;
 }
