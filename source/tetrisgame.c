@@ -37,10 +37,12 @@ STATE_TYPE updateTitle(tetrisGameState *state) {
 void initGame(tetrisGameState *state) {
     // test
     for(int i = 0; i < PIECE_BLOCKS; i++) {
-        state->playerPiece = tetrisPiece_T;
-        printf("%x\n", &state->playerPiece.blocks[0]);
+        state->playerPiece = tetrisPiecesPredefined[PIECE_T];
+        printf("%x\n", &tetrisPiecesPredefined[0]);
     }
 }
+
+PIECE_TYPE type = PIECE_T;
 
 STATE_TYPE updateGame(tetrisGameState *state) {
     state->frame++;
@@ -51,6 +53,11 @@ STATE_TYPE updateGame(tetrisGameState *state) {
         rotatePiece(&state->playerPiece, false);
     if(keys & KEY_B)
         rotatePiece(&state->playerPiece, true);
+    if(keys & KEY_R) {
+        type++;
+        if(type >= PIECE_TYPE_MAX) type = 0;
+        initPiece(&state->playerPiece, type);
+    }
 
     return state->stateType;
 }

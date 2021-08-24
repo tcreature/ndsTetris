@@ -28,15 +28,16 @@ typedef struct tetrisBlock {
  */
 tetrisBlock createTetrisBlock(int x, int y, tetrisColor color);
 
-typedef enum tetrisPieceType {
-    T_PIECE,
-    SQUARE_PIECE,
-    L_PIECE,
-    REVERSE_L_PIECE,
-    S_PIECE,
-    REVERSE_S_PIECE,
-    LINE_PIECE
-} tetrisPieceType;
+typedef enum PIECE_TYPE {
+    PIECE_T= 0,
+    PIECE_SQUARE,
+    PIECE_L,
+    PIECE_REVERSE_L,
+    PIECE_S,
+    PIECE_REVERSE_S,
+    PIECE_LINE,
+    PIECE_TYPE_MAX
+} PIECE_TYPE;
 
 /*! \brief Struct to represent a tetris piece consisting of 4 blocks.
  */
@@ -45,21 +46,19 @@ typedef struct tetrisPiece {
     tetrisBlock blocks[PIECE_BLOCKS];
     int pivot; // index into blocks array indicating
                // which block will be the center of rotation.
+               // Set it to -1 to indicate the piece should not be
+               // rotated (as for square pieces).
 } tetrisPiece;
+
+// Pre-defined pieces
+extern const tetrisPiece tetrisPiecesPredefined[PIECE_TYPE_MAX];
+
+void initPiece(tetrisPiece *piece, PIECE_TYPE type);
 
 /*!\brief Rotates a piece about its own pivot
  * \param piece a pointer to the piece to rotate
  * \param ccw whether to rotate counter-clockwise
  */
 void rotatePiece(tetrisPiece *piece, bool ccw);
-
-// Pre-defined pieces
-extern const tetrisPiece tetrisPiece_T;
-extern const tetrisPiece tetrisPiece_SQUARE;
-extern const tetrisPiece tetrisPiece_L;
-extern const tetrisPiece tetrisPiece_REVERSE_L;
-extern const tetrisPiece tetrisPiece_S;
-extern const tetrisPiece tetrisPiece_REVERSE_S;
-extern const tetrisPiece tetrisPiece_LINE;
 
 #endif
